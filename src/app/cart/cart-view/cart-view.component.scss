@@ -1,0 +1,12 @@
+.cart {
+  &__price {
+    font-weight: 800;
+  }
+
+  &__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+  }
+}

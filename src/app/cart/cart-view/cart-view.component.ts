@@ -1,10 +1,41 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
+import { CartService } from '../cart.service';
+import { Product } from '../../models/product';
 
 @Component({
   selector: 'app-cart-view',
   templateUrl: './cart-view.component.html',
-  styleUrls: ['./cart-view.component.scss']
+  styleUrls: ['./cart-view.component.scss'],
 })
-export class CartViewComponent {
+export class CartViewComponent implements OnInit {
+  cartItems: Product[] = [];
+  totalPrice: number = 0;
 
+  constructor(private cartService: CartService) {}
+
+  ngOnInit(): void {
+    this.cartService.getCartItems().subscribe((data) => {
+      this.cartItems = data;
+      this.totalPrice = this.getTotalPrice();
+    });
+  }
+
+  getTotalPrice(): number {
+    return this.cartItems.reduce((acc, product) => acc + product.price, 0);
+    // let total = 0;
+    // for (let item of this.cartItems) {
+    //   total += item.price;
+    // }
+    // return total;
+  }
+
+  clearCart(): void {
+    // como é um Oservable temos que fazer o subscribe
+    this.cartService.clearCart().subscribe();
+  }
+
+  checkout(): void {
+    this.cartService.checkout(this.cartItems).subscribe();
+  }
 }

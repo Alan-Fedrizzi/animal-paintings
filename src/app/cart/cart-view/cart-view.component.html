@@ -1,1 +1,27 @@
-<p>cart-view works!</p>
+<div class="container container--sm cart">
+  <h1>Your cart</h1>
+
+  <mat-card>
+    <mat-list>
+      <mat-list-item *ngFor="let item of cartItems">
+        <span matListItemTitle> {{ item.name }} </span>
+        <span matListItemLine> {{ item.price | currency : "USD" }} </span>
+      </mat-list-item>
+
+      <mat-list-item>
+        <span class="cart__price" matListItemTitle> Total (USD) </span>
+        <span class="cart__price" matListItemLine>
+          {{ totalPrice | currency : "USD" }}
+        </span>
+      </mat-list-item>
+      <mat-list-item>
+        <div class="cart__bottom">
+          <button mat-flat-button (click)="clearCart()">Clear</button>
+          <button mat-raised-button color="accent" (click)="checkout()">
+            Checkout
+          </button>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </mat-card>
+</div>
